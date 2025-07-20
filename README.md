@@ -12,7 +12,7 @@ _A Data-Driven System to Forecast Electric Vehicle (EV) Charging Demand Across L
 **AICTE Shell-Edunet Skills4Future Internship Project**
 
 [![Project Status: In Progress](https://img.shields.io/badge/Status-In%20Progress-yellow?style=flat-round)](https://github.com/YourUsername/EV-Vehicle-Charging-Demand-Prediction)
-[![Python Version](https://img.shields.io/badge/python-3.12%2B-blue?style=flat-round)](https://www.python.org/)
+[![Python Version](https://img.shields.io/badge/Python-3.12%2B-blue?style=flat-round)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-round)](LICENSE)
 [![AICTE Internship](https://img.shields.io/badge/AICTE-Skills4Future-blue?style=flat-round)](https://shell.edunetfoundation.org)
 
