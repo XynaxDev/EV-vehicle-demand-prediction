@@ -14,7 +14,7 @@ _A Data-Driven System to Forecast Electric Vehicle (EV) Charging Demand Across L
 **AICTE Shell-Edunet Skills4Future Internship Project**
 
 [![Project Status: In Progress](https://img.shields.io/badge/Status-In%20Progress-yellow?style=flat-round)](https://github.com/YourUsername/EV-Vehicle-Charging-Demand-Prediction)
-[![Python Version](https://img.shields.io/badge/Python-3.12%2B-blue?style=flat-round)](https://www.python.org/)
+[![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue?style=flat-round)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-round)](LICENSE)
 [![AICTE Internship](https://img.shields.io/badge/AICTE-Skills4Future-blue?style=flat-round)](https://shell.edunetfoundation.org)
 
@@ -34,7 +34,7 @@ Electric Vehicles (EVs) are revolutionizing transportation, but efficient chargi
 
 | Component           | Technology                    |
 |---------------------|-------------------------------|
-| Programming Language| Python (3.12+)                 |
+| Programming Language| Python (3.10)                 |
 | Data Processing     | pandas, numpy                 |
 | Visualization       | matplotlib, seaborn           |
 | ML Frameworks       | scikit-learn, RandomForestRegressor         |
@@ -48,7 +48,7 @@ Follow these instructions to set up the project locally.
 
 ### Prerequisites
 
-- Python 3.12 or above
+- Python 3.10 or above
 - Git
 - Docker (optional, for containerized deployment)
 
@@ -59,12 +59,7 @@ Follow these instructions to set up the project locally.
    git clone https://github.com/XynaxDev/EV-vehicle-demand-prediction.git
    cd EV-vehicle-demand-prediction
    ```
-2. **Create and activate a virtual environment**
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows: venv/Scripts/Activate.ps1
-   ```
-3. **Install dependencies**
+2. **Install dependencies**
    ```bash
    pip install -r requirements.txt
    ```
@@ -81,4 +76,4 @@ This project is licensed under the [MIT License](LICENSE).
 ## 🙏 Acknowledgements
 
 - AICTE & Shell Edunet Skills4Future Internship Program
-- Inspired by best practices from real-world EV infrastructure projects⚡
+- Inspired by best practices from real-world EV infrastructure projects.
