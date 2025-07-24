@@ -3,8 +3,9 @@
 ✔ AICTE Shell-Edunet Skills4Future Internship Project
 ✔ In Progress
 -->
-
-<img src="assets/car.png" alt="car">
+<div align=center>
+<img style= "height:125px;" src="assets/car.png" alt="car">
+</div>
 
 # EV Vehicle Charging Demand Prediction 
 
