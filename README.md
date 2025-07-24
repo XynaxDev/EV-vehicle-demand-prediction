@@ -4,8 +4,9 @@
 ✔ In Progress
 -->
 
+<img src="assets/car.png" alt="car">
 
-# EV Vehicle Charging Demand Prediction 🚗
+# EV Vehicle Charging Demand Prediction 
 
 _A Data-Driven System to Forecast Electric Vehicle (EV) Charging Demand Across Locations_
 
