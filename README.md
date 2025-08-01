@@ -1,73 +1,79 @@
-<!--
-✔ EV-Vehicle-Charging-Demand-Prediction
-✔ AICTE Shell-Edunet Skills4Future Internship Project
-✔ In Progress
--->
-<div align=center>
-<img style= "height:125px;" src="assets/car.png" alt="car">
+<div align="center">
+  <img style="height:150px;" src="assets/car.png" alt="EV Forecast Dashboard">
+  <h1>⚡ EV Charging Demand Prediction</h1>
+  <p><em>A Data-Driven System to Forecast Electric Vehicle (EV) Charging Demand Across Washington State</em></p>
+  
+  <p>
+    <img src="https://img.shields.io/badge/Status-In%20Progress-yellow?style=flat&logo=github" alt="Status">
+    <img src="https://img.shields.io/badge/Python-3.10+-blue?style=flat&logo=python" alt="Python">
+    <img src="https://img.shields.io/badge/Streamlit-grey?style=flat&logo=streamlit" alt="Streamlit">
+    <img src="https://img.shields.io/badge/License-MIT-green?style=flat" alt="License">
+    <img src="https://img.shields.io/badge/AICTE-Skills4Future-blue?style=flat" alt="AICTE">
+  </p>
 </div>
 
-# EV Vehicle Charging Demand Prediction 
-
-_A Data-Driven System to Forecast Electric Vehicle (EV) Charging Demand Across Locations_
+## 📌 Project Overview
 
 **AICTE Shell-Edunet Skills4Future Internship Project**
 
-[![Project Status: In Progress](https://img.shields.io/badge/Status-In%20Progress-yellow?style=flat-round)](https://github.com/YourUsername/EV-Vehicle-Charging-Demand-Prediction)
-[![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue?style=flat-round)](https://www.python.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-round)](LICENSE)
-[![AICTE Internship](https://img.shields.io/badge/AICTE-Skills4Future-blue?style=flat-round)](https://shell.edunetfoundation.org)
+Electric Vehicles (EVs) are revolutionizing transportation, but efficient charging infrastructure is essential for sustainable adoption. This project leverages historical EV registration data to build a predictive model for forecasting adoption trends across Washington State counties.
 
-## 🎯 Project Overview
+![Dashboard Preview](./assets/dashboard.png)
 
-Electric Vehicles (EVs) are revolutionizing transportation, but efficient charging infrastructure is essential for sustainable adoption. This project leverages historical charging station usage data, weather patterns, and traffic flows to build a predictive model for forecasting demand at individual charging points. By anticipating peak loads, stakeholders can optimize resource allocation, reduce wait times, and enhance grid stability.
+## ✨ Key Features
 
-<!-- ## ✨ Key Features
-
-- **Data Ingestion & Preprocessing**: Automates fetching, cleaning, and merging datasets from multiple sources.
-- **Exploratory Data Analysis (EDA)**: Interactive dashboards to visualize demand patterns and correlations.
-- **Machine Learning Pipeline**: Modular workflows for feature engineering, model training (Random Forest, RandomForestRegressor), and evaluation.
-- **Real-Time Prediction API**: Flask-based REST endpoints for on-the-fly demand forecasting.
-- **Deployment Ready**: Containerized with Docker and CI/CD templates for GitHub Actions. -->
+- **County-Level Forecasting**: Predict EV adoption for any Washington State county
+- **Interactive Dashboard**: Beautiful Streamlit interface with dark theme
+- **3-Year Projections**: Visualize growth trends with historical context
+- **Multi-County Comparison**: Analyze regional adoption patterns
+- **Machine Learning Model**: RandomForest-based forecasting engine
 
 ## 🛠️ Tech Stack
 
-| Component           | Technology                    |
-|---------------------|-------------------------------|
-| Programming Language| Python (3.10)                 |
-| Data Processing     | pandas, numpy                 |
-| Visualization       | matplotlib, seaborn           |
-| ML Frameworks       | scikit-learn, RandomForestRegressor         |
-| Web Framework       | Streamlit                         |
-| Containerization    | Docker                        |
-| CI/CD               | GitHub Actions                |
+| Component           | Technology                          |
+|---------------------|-------------------------------------|
+| Core Language       | Python 3.10                         |
+| Data Processing     | pandas, numpy                       |
+| Visualization       | matplotlib, Plotly                  |
+| ML Framework        | scikit-learn (RandomForestRegressor)|
+| Web Framework       | Streamlit                           |
+| Deployment          | Render (via Procfile)               |
 
-## 🚀 Getting Started
+## 📂 Project Structure
+```
+EV-vehicle-demand-prediction/
+├── assets/
+│ ├── car.png
+│ └── ev-car-factory.jpg
+├── data/
+│ ├── EV_Population_By_County.csv
+│ └── preprocessed_ev_data.csv
+├── notebook/
+│ └── EV_DemandPrediction.ipynb
+├── app.py
+├── forecasting_ev_model.pkl
+├── requirements.txt
+├── runtime.txt
+├── Procfile
+├── LICENSE
+└── README.md
+```
 
+## 🚀 Deployment Status
+
+[![Render Deployment Status](https://api.render.com/deploy/srv-cm9v5bmd3nmc73d5j8ug?type=badge)](https://render.com)
+
+Deployed live on Render: [https://ev-forecast.onrender.com](https://ev-forecast.onrender.com)
+
+## 💻 Local Setup
 Follow these instructions to set up the project locally.
 
-### Prerequisites
-
-- Python 3.10 or above
-- Git
-- Docker (optional, for containerized deployment)
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/XynaxDev/EV-vehicle-demand-prediction.git
-   cd EV-vehicle-demand-prediction
-   ```
-2. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-## Update Soon...
-
-> [!Note] 
-**Project In Progress**: Core modules under development. Data ingestion and Data Preprocessing completed; model training and API endpoints in progress.
+```bash
+git clone https://github.com/XynaxDev/EV-vehicle-demand-prediction.git
+cd EV-vehicle-demand-prediction
+pip install -r requirements.txt
+streamlit run app.py
+```
 
 ## 📄 License
 
@@ -77,3 +83,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 - AICTE & Shell Edunet Skills4Future Internship Program
 - Inspired by best practices from real-world EV infrastructure projects.
+
+<br>
+<br>
+<div align="center"> Made with 💌 and Streamlit by Akash | © 2025 AICTE Internship Project </div>
