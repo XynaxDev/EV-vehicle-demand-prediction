@@ -5,7 +5,7 @@ import joblib
 from datetime import datetime
 import matplotlib.pyplot as plt
 
-# Set Streamlit page config first thing
+# Set Streamlit page config
 st.set_page_config(
     page_title="EV Adoption Forecaster",
     layout="wide",
@@ -29,8 +29,8 @@ st.markdown("""
 .stApp {
     background-color: #0E1117;
     color: #f0f2f6;
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
 }
 /* Custom container styling */
 .main-container {
@@ -94,8 +94,15 @@ st.markdown("""
     opacity: 0.8;
     color: #9aa8b9;
 }
-/* Custom table styling for multi-county dashboard */
+/* Custom table styling with specific scroll container */
+.table-scroll-container {
+    overflow-x: auto;
+    width: 100%;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
+    margin-bottom: 1rem;
+}
 .stTable > div {
+    min-width: 600px; /* Ensure table has a minimum width to trigger scrolling */
     background: linear-gradient(135deg, #1a1f2e 0%, #0d111b 100%);
     border: 1px solid rgba(125, 80, 243, 0.3);
     border-radius: 10px;
@@ -110,6 +117,7 @@ st.markdown("""
     padding: 1rem;
     text-align: center;
     border-bottom: 1px solid rgba(125, 80, 243, 0.2);
+    white-space: nowrap; /* Prevent text wrapping */
 }
 .stTable td {
     color: #b0bac5;
@@ -117,6 +125,7 @@ st.markdown("""
     padding: 1rem;
     text-align: center;
     border-bottom: 1px solid rgba(125, 80, 243, 0.2);
+    white-space: nowrap; /* Prevent text wrapping */
 }
 .stTable tr:hover {
     background: rgba(125, 80, 243, 0.1);
@@ -205,6 +214,42 @@ div.stPlotlyChart {
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 header {visibility: hidden;}
+/* Loading spinner */
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #9aa8b9;
+    border-radius: 50%;
+    border-top-color: #00C2FF;
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 10px;
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+.loading-text {
+    color: #9dc6ff;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .stTable > div {
+        min-width: 800px; /* Increase minimum width for better scrolling on small screens */
+    }
+    .section-header {
+        font-size: 1.2rem;
+    }
+    .metric-card {
+        padding: 1rem;
+    }
+    .metric-value {
+        font-size: 1.5rem;
+    }
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -309,7 +354,18 @@ county = st.selectbox(
     help="Select a Washington State county to view EV adoption forecasts"
 )
 if st.button("Generate County Forecast"):
+    # Show loading indicator
+    loading_placeholder = st.empty()
+    loading_placeholder.markdown("""
+    <div class="loading-text">
+        <div class="loading-spinner"></div>
+        Analyzing data and generating forecast...
+    </div>
+    """, unsafe_allow_html=True)
+    
     combined = get_combined_data(county)
+    loading_placeholder.empty()  # Clear loading indicator
+    
     if combined is None:
         st.error(f"County '{county}' not found in dataset or has insufficient historical data.")
         st.stop()
@@ -424,6 +480,15 @@ if st.button("Generate Multi-County Comparison"):
     if len(multi_counties) < 2:
         st.error("Please select minimum two county to generate the comparison.")
     else:
+        # Show loading indicator
+        loading_placeholder = st.empty()
+        loading_placeholder.markdown("""
+        <div class="loading-text">
+            <div class="loading-spinner"></div>
+            Processing multi-county analysis...
+        </div>
+        """, unsafe_allow_html=True)
+        
         comparison_data = []
         for cty in multi_counties:
             combined_cty = get_combined_data(cty)
@@ -431,10 +496,14 @@ if st.button("Generate Multi-County Comparison"):
                 combined_cty['County'] = cty
                 comparison_data.append(combined_cty)
 
+        loading_placeholder.empty()  # Clear loading indicator
+
         if comparison_data:
             comp_df = pd.concat(comparison_data, ignore_index=True)
 
             # Enhanced comparison plot
+            st.markdown('<div class="section-header">Multi-County Comparison Plot</div>', unsafe_allow_html=True)
+
             plt.style.use('dark_background')
             fig, ax = plt.subplots(figsize=(16, 9))
             fig.patch.set_facecolor('#0E1117')
@@ -476,7 +545,7 @@ if st.button("Generate Multi-County Comparison"):
             metrics = {}
             for cty in multi_counties:
                 cty_df = comp_df[comp_df['County'] == cty].reset_index(drop=True)
-                # Check if there’s enough data to avoid IndexError
+                # Check if there's enough data to avoid IndexError
                 if len(cty_df) > forecast_horizon:
                     historical_total = cty_df['Cumulative EV'].iloc[len(cty_df) - forecast_horizon - 1]
                     forecasted_total = cty_df['Cumulative EV'].iloc[-1]
@@ -490,7 +559,7 @@ if st.button("Generate Multi-County Comparison"):
                 else:
                     st.warning(f"Insufficient data for {cty} to calculate metrics.")
 
-            # Display as a table using st.table, rename index to Rank and start from 1
+            # Display as a table using st.table, with scrollable container
             if metrics:
                 table_data = []
                 sorted_metrics = dict(sorted(metrics.items(), key=lambda x: x[1]['projected_evs'], reverse=True))
@@ -508,9 +577,10 @@ if st.button("Generate Multi-County Comparison"):
                         'Trend Description': f"{trend_desc} {diff_text}"
                     })
 
-                df_table = pd.DataFrame(table_data).reset_index(drop=True)  # Remove separate Rank column
+                df_table = pd.DataFrame(table_data)
                 df_table.index = df_table.index + 1  # Start index from 1
                 df_table.index.name = 'Rank'  # Rename index to Rank
+                st.markdown('<div class="table-scroll-container">', unsafe_allow_html=True)
                 st.table(df_table.style.set_properties(**{
                     'background-color': 'transparent',
                     'border': '1px solid rgba(125, 80, 243, 0.2)',
@@ -536,6 +606,7 @@ if st.button("Generate Multi-County Comparison"):
                     {'selector': '.growth-positive', 'props': [('color', '#51E3A4')]},
                     {'selector': '.growth-negative', 'props': [('color', '#FF6B6B')]}
                 ]).set_table_attributes('class="stTable"'))
+                st.markdown('</div>', unsafe_allow_html=True)
 
                 # Leaderboard Highlights (Enhanced and Simple with more details)
                 top_projected = max(metrics.values(), key=lambda x: x['projected_evs'])
