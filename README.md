@@ -4,7 +4,7 @@
   <p><em>A Data-Driven System to Forecast Electric Vehicle (EV) Charging Demand Across Washington State</em></p>
   
   <p>
-    <img src="https://img.shields.io/badge/Status-In%20Progress-yellow?style=flat&logo=github" alt="Status">
+    <img src="https://img.shields.io/badge/Status-Completed-gree?style=flat&logo=github" alt="Status">
     <img src="https://img.shields.io/badge/Python-3.10+-blue?style=flat&logo=python" alt="Python">
     <img src="https://img.shields.io/badge/Streamlit-grey?style=flat&logo=streamlit" alt="Streamlit">
     <img src="https://img.shields.io/badge/License-MIT-green?style=flat" alt="License">
@@ -61,9 +61,11 @@ EV-vehicle-demand-prediction/
 
 ## 🚀 Deployment Status
 
-[![Render Deployment Status](https://api.render.com/deploy/srv-cm9v5bmd3nmc73d5j8ug?type=badge)](https://render.com)
+[![Render Status](https://img.shields.io/badge/Render-Deployed-46F2B5?logo=render&logoColor=white)](https://ev-demand-forecast.onrender.com)
 
-Deployed live on Render: [https://ev-forecast.onrender.com](https://ev-forecast.onrender.com)
+<!-- [![Render Deployment Status](https://api.render.com/deploy/srv-d26cvvffte5s73enuqs0?type=badge)](https://ev-demand-forecast.onrender.com) -->
+
+Deployed live on Render: [https://ev-demand-forecast.onrender.com](https://ev-demand-forecast.onrender.com)
 
 ## 💻 Local Setup
 Follow these instructions to set up the project locally.
