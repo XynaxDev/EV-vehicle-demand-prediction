@@ -22,8 +22,13 @@ def load_model():
 
 model = load_model()
 
-# === Enhanced Dark Professional Styling ===
-st.markdown("""
+# === Theme Selection with Improved Layout ===
+col1, col2 = st.columns([2, 18])  # Left-align the dropdown
+with col1:
+    theme = st.selectbox("Select Theme", ["Dark", "Light"], index=0)
+
+# === Define CSS for Dark and Light Themes ===
+dark_theme_css = """
 <style>
 /* Main app styling - Pitch Dark */
 .stApp {
@@ -32,6 +37,20 @@ st.markdown("""
     margin: 0;
     padding: 0;
 }
+.stSelectbox label {
+    color: #f0f2f6 !important;
+}
+.stSelectbox select {
+    background-color: #1a1f2e !important;
+    color: #f0f2f6 !important;
+    border: 1px solid #2d3746 !important;
+    border-radius: 8px !important;
+}
+.stSelectbox select option {
+    background-color: #1a1f2e !important;
+    color: #f0f2f6 !important;
+}
+
 /* Custom container styling */
 .main-container {
     margin: 0rem 0 !important;
@@ -98,11 +117,11 @@ st.markdown("""
 .table-scroll-container {
     overflow-x: auto;
     width: 100%;
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
+    -webkit-overflow-scrolling: touch;
     margin-bottom: 1rem;
 }
 .stTable > div {
-    min-width: 600px; /* Ensure table has a minimum width to trigger scrolling */
+    min-width: 600px;
     background: linear-gradient(135deg, #1a1f2e 0%, #0d111b 100%);
     border: 1px solid rgba(125, 80, 243, 0.3);
     border-radius: 10px;
@@ -117,7 +136,7 @@ st.markdown("""
     padding: 1rem;
     text-align: center;
     border-bottom: 1px solid rgba(125, 80, 243, 0.2);
-    white-space: nowrap; /* Prevent text wrapping */
+    white-space: nowrap;
 }
 .stTable td {
     color: #b0bac5;
@@ -125,7 +144,6 @@ st.markdown("""
     padding: 1rem;
     text-align: center;
     border-bottom: 1px solid rgba(125, 80, 243, 0.2);
-    white-space: nowrap; /* Prevent text wrapping */
 }
 .stTable tr:hover {
     background: rgba(125, 80, 243, 0.1);
@@ -167,18 +185,18 @@ st.markdown("""
     font-weight: 500;
     border-left: 4px solid #7D50F3;
 }
-/* Input styling */
-.stSelectbox > div > div {
+/* Input styling for selectbox and multiselect */
+.stSelectbox > div > div, .stMultiSelect > div > div {
     background: #1a1f2e !important;
     border: 1px solid #2d3746 !important;
     border-radius: 8px !important;
     color: #ffffff !important;
 }
-.stMultiSelect > div > div {
-    background: #1a1f2e !important;
-    border: 1px solid #2d3746 !important;
-    border-radius: 8px !important;
-    color: #ffffff !important;
+/* Button styling */
+.stButton > button {
+    background-color: #2d3746;
+    color: #f0f2f6;
+    border: 1px solid #4a5568;
 }
 /* Image container */
 .image-container {
@@ -199,7 +217,7 @@ st.markdown("""
 .footer {
     text-align: center;
     color: #6b7c93;
-    font-size: 1.0rem;
+    1rem;
     margin-top: 3rem;
     padding-top: 2rem;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -210,7 +228,7 @@ div.stPlotlyChart {
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
-/* Hide streamlit elements */
+/* Hide Streamlit elements */
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 header {visibility: hidden;}
@@ -238,7 +256,7 @@ header {visibility: hidden;}
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .stTable > div {
-        min-width: 800px; /* Increase minimum width for better scrolling on small screens */
+        min-width: 800px;
     }
     .section-header {
         font-size: 1.2rem;
@@ -251,7 +269,260 @@ header {visibility: hidden;}
     }
 }
 </style>
-""", unsafe_allow_html=True)
+"""
+
+light_theme_css = """
+<style>
+/* Main app styling - Light Theme */
+.stApp {
+    background-color: #ffffff;
+    color: #333333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Input styling for selectbox and multiselect */
+.stSelectbox label, .stMultiSelect label {
+    color: #333333 !important;
+}
+.stSelectbox > div > div, .stMultiSelect > div > div {
+    background-color: #f5f5f5 !important;
+    border: 1px solid #bdbdbd !important;
+    border-radius: 8px !important;
+    color: #333333 !important;
+}
+div[data-baseweb="select"] {
+    background-color: #f5f5f5 !important;
+    border: 1px solid #bdbdbd !important;
+    border-radius: 8px !important;
+    color: #333333 !important;
+}
+div[data-baseweb="select"] * {
+    background-color: #f5f5f5 !important;
+    color: #333333 !important;
+}
+
+/* Custom container styling */
+.main-container {
+    margin: 0rem 0 !important;
+}
+/* Header styling */
+.app-header {
+    text-align: center;
+}
+.app-title {
+    font-size: 4.5rem;
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+    background: linear-gradient(90deg, #6200ea, #0288d1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.app-subtitle {
+    font-size: 1.2rem;
+    color: #555555;
+    font-weight: 400;
+    margin-bottom: 1rem;
+}
+.app-description {
+    font-size: 1rem;
+    color: #666666;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+/* Section headers */
+.section-header {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #000000;
+    margin: 2rem 0 1rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #6200ea;
+}
+/* Metric cards */
+.metric-card {
+    background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+    color: #333333;
+    padding: 1.5rem;
+    border-radius: 10px;
+    text-align: center;
+    margin: 1rem 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(98, 0, 234, 0.2);
+}
+.metric-value {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #0288d1;
+}
+.metric-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    color: #666666;
+}
+/* Custom table styling with specific scroll container */
+.table-scroll-container {
+    overflow-x: auto;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 1rem;
+}
+.stTable > div {
+    min-width: 600px;
+    background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+    border: 1px solid rgba(98, 0, 234, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+.stTable th {
+    background: #e0e0e0;
+    color: #0288d1;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(98, 0, 234, 0.2);
+    white-space: nowrap;
+}
+.stTable td {
+    color: #555555;
+    font-size: 1rem;
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(98, 0, 234, 0.2);
+    white-space: nowrap;
+}
+.stTable tr:hover {
+    background: rgba(98, 0, 234, 0.05);
+}
+.stTable .rank {
+    color: #6200ea;
+    font-weight: 700;
+}
+.stTable .growth-positive {
+    color: #2e7d32;
+}
+.stTable .growth-negative {
+    color: #c62828;
+}
+/* Leaderboard styling */
+.leaderboard {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+    border: 1px solid rgba(98, 0, 234, 0.2);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+.leaderboard h3 {
+    color: #0288d1;
+    margin-bottom: 0.5rem;
+}
+.leaderboard p {
+    color: #666666;
+    margin: 0.25rem 0;
+}
+/* Success message styling */
+.success-message {
+    background: rgba(224, 224, 224, 0.5);
+    color: #444444;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    margin: 1rem 0;
+    font-weight: 500;
+    border-left: 4px solid #6200ea;
+}
+/* Button styling */
+.stButton > button {
+    background-color: #e0e0e0;
+    color: #333333;
+    border: 1px solid #bdbdbd;
+}
+/* Image container */
+.image-container {
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 2rem 0;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+/* Divider */
+.custom-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #6200ea, transparent);
+    margin: 3rem 0;
+    border: none;
+}
+/* Footer */
+.footer {
+    text-align: center;
+    color: #777777;
+    font-size: 1.0rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+/* Plot styling */
+div.stPlotlyChart {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+/* Hide Streamlit elements */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
+/* Loading spinner */
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #bdbdbd;
+    border-radius: 50%;
+    border-top-color: #0288d1;
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 10px;
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+.loading-text {
+    color: #555555;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .stTable > div {
+        min-width: 800px;
+    }
+    .section-header {
+        font-size: 1.2rem;
+    }
+    .metric-card {
+        padding: 1rem;
+    }
+    .metric-value {
+        font-size: 1.5rem;
+    }
+}
+</style>
+"""
+
+# Apply the selected theme
+if theme == "Dark":
+    st.markdown(dark_theme_css, unsafe_allow_html=True)
+    plt.style.use('dark_background')
+else:
+    st.markdown(light_theme_css, unsafe_allow_html=True)
+    plt.style.use('default')
 
 # Main container
 st.markdown('<div class="main-container">', unsafe_allow_html=True)
@@ -287,7 +558,7 @@ df = load_data()
 @st.cache_data
 def get_combined_data(county):
     county_df = df[df['County'] == county].sort_values("Date")
-    if county not in df['County'].unique():
+    if county not in df['County'].unique() or len(county_df) < 3:
         return None
     
     county_code = county_df['county_encoded'].iloc[0]
@@ -296,10 +567,6 @@ def get_combined_data(county):
     months_since_start = county_df['months_since_start'].max()
     latest_date = county_df['Date'].max()
     future_rows = []
-
-    # Check if there are enough historical data points
-    if len(historical_ev) < 3:
-        return None
 
     for i in range(1, forecast_horizon + 1):
         forecast_date = latest_date + pd.DateOffset(months=i)
@@ -373,7 +640,7 @@ if st.button("Generate County Forecast"):
     # === Results Section ===
     st.markdown('<div class="section-header">Forecast Results</div>', unsafe_allow_html=True)
 
-    # Display key metrics (original card layout)
+    # Display key metrics
     historical_total = combined[combined['Source'] == 'Historical']['Cumulative EV'].iloc[-1]
     forecasted_total = combined[combined['Source'] == 'Forecast']['Cumulative EV'].iloc[-1]
 
@@ -406,14 +673,16 @@ if st.button("Generate County Forecast"):
     # === Enhanced Plot ===
     st.markdown(f'<div class="section-header">Cumulative EV Trend - {county} County</div>', unsafe_allow_html=True)
 
-    # Set matplotlib style for dark theme
-    plt.style.use('dark_background')
     fig, ax = plt.subplots(figsize=(14, 8))
-    fig.patch.set_facecolor('#0E1117')
-    ax.set_facecolor('#0E1117')
+    if theme == "Dark":
+        fig.patch.set_facecolor('#0E1117')
+        ax.set_facecolor('#0E1117')
+    else:
+        fig.patch.set_facecolor('#ffffff')
+        ax.set_facecolor('#ffffff')
 
-    # Plot with minimal and sleek trend lines
-    colors = ['#00C2FF', '#7D50F3']  # Subtle, professional colors
+    colors = ['#00C2FF' if theme == "Dark" else '#0288d1', 
+              '#7D50F3' if theme == "Dark" else '#6200ea']
     for i, (label, data) in enumerate(combined.groupby('Source')):
         ax.plot(data['Date'], data['Cumulative EV'],
                 label=label,
@@ -421,31 +690,33 @@ if st.button("Generate County Forecast"):
                 linewidth=2,
                 color=colors[i],
                 alpha=0.9,
-                marker=None)  # Removed markers for minimalism
+                marker=None)
 
-    # Professional plot styling
     ax.set_title(f"EV Adoption Forecast: {county} County",
                 fontsize=18,
                 fontweight='bold',
-                color='white',
+                color='#ffffff' if theme == "Dark" else '#000000',
                 pad=20)
-    ax.set_xlabel("Timeline", fontsize=14, color='#b0bac5', fontweight='500')
-    ax.set_ylabel("Cumulative EV Count", fontsize=14, color='#b0bac5', fontweight='500')
+    ax.set_xlabel("Timeline", fontsize=14, 
+                 color='#b0bac5' if theme == "Dark" else '#555555', 
+                 fontweight='500')
+    ax.set_ylabel("Cumulative EV Count", fontsize=14, 
+                 color='#b0bac5' if theme == "Dark" else '#555555', 
+                 fontweight='500')
 
-    # Grid and styling
-    ax.grid(True, alpha=0.1, linestyle='--', linewidth=0.5, color='#2d3746')
+    ax.grid(True, alpha=0.1, linestyle='--', linewidth=0.5, 
+           color='#2d3746' if theme == "Dark" else '#e0e0e0')
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
-    ax.spines['left'].set_color('#2d3746')
-    ax.spines['bottom'].set_color('#2d3746')
+    ax.spines['left'].set_color('#2d3746' if theme == "Dark" else '#bdbdbd')
+    ax.spines['bottom'].set_color('#2d3746' if theme == "Dark" else '#bdbdbd')
 
-    # Legend styling
     legend = ax.legend(frameon=True, framealpha=0.1, fancybox=True, shadow=False,
-                    loc='upper left', fontsize=12, facecolor='#0E1117')
-    legend.get_frame().set_edgecolor('#2d3746')
+                    loc='upper left', fontsize=12, 
+                    facecolor='#0E1117' if theme == "Dark" else '#ffffff')
+    legend.get_frame().set_edgecolor('#2d3746' if theme == "Dark" else '#bdbdbd')
 
-    # Tick styling
-    ax.tick_params(colors='#9aa8b9', labelsize=11)
+    ax.tick_params(colors='#9aa8b9' if theme == "Dark" else '#666666', labelsize=11)
     plt.tight_layout()
     st.pyplot(fig)
 
@@ -478,9 +749,8 @@ multi_counties = st.multiselect(
 )
 if st.button("Generate Multi-County Comparison"):
     if len(multi_counties) < 2:
-        st.error("Please select minimum two county to generate the comparison.")
+        st.error("Please select at least two counties to generate the comparison.")
     else:
-        # Show loading indicator
         loading_placeholder = st.empty()
         loading_placeholder.markdown("""
         <div class="loading-text">
@@ -494,22 +764,38 @@ if st.button("Generate Multi-County Comparison"):
             combined_cty = get_combined_data(cty)
             if combined_cty is not None:
                 combined_cty['County'] = cty
+                # Ensure consistent length by padding with NaN if needed
+                max_length = max(len(combined_cty), forecast_horizon + len(df[df['County'] == cty]))
+                if len(combined_cty) < max_length:
+                    padding = pd.DataFrame({
+                        'Date': pd.date_range(start=combined_cty['Date'].iloc[-1], periods=max_length - len(combined_cty) + 1, freq='M')[1:],
+                        'Cumulative EV': np.nan,
+                        'Source': 'Forecast',
+                        'County': cty
+                    })
+                    combined_cty = pd.concat([combined_cty, padding], ignore_index=True)
                 comparison_data.append(combined_cty)
 
-        loading_placeholder.empty()  # Clear loading indicator
+        loading_placeholder.empty()
 
         if comparison_data:
-            comp_df = pd.concat(comparison_data, ignore_index=True)
+            comp_df = pd.concat(comparison_data, ignore_index=True).dropna(subset=['Cumulative EV'])
 
             # Enhanced comparison plot
             st.markdown('<div class="section-header">Multi-County Comparison Plot</div>', unsafe_allow_html=True)
 
-            plt.style.use('dark_background')
             fig, ax = plt.subplots(figsize=(16, 9))
-            fig.patch.set_facecolor('#0E1117')
-            ax.set_facecolor('#0E1117')
+            if theme == "Dark":
+                fig.patch.set_facecolor('#0E1117')
+                ax.set_facecolor('#0E1117')
+            else:
+                fig.patch.set_facecolor('#ffffff')
+                ax.set_facecolor('#ffffff')
 
-            comparison_colors = ['#00C2FF', '#7D50F3', '#FF6B6B', '#51E3A4']
+            comparison_colors = ['#00C2FF' if theme == "Dark" else '#0288d1', 
+                               '#7D50F3' if theme == "Dark" else '#6200ea', 
+                               '#FF6B6B' if theme == "Dark" else '#c62828', 
+                               '#51E3A4' if theme == "Dark" else '#2e7d32']
             line_styles = ['-', '--', '-.']
             for i, (cty, group) in enumerate(comp_df.groupby('County')):
                 ax.plot(group['Date'], group['Cumulative EV'],
@@ -518,34 +804,40 @@ if st.button("Generate Multi-County Comparison"):
                         linewidth=2,
                         color=comparison_colors[i % len(comparison_colors)],
                         alpha=0.9,
-                        marker=None) 
+                        marker=None)
 
             ax.set_title("EV Adoption Comparison: Multi-County Analysis",
                         fontsize=20,
                         fontweight='bold',
-                        color='white',
+                        color='#ffffff' if theme == "Dark" else '#000000',
                         pad=25)
-            ax.set_xlabel("Timeline", fontsize=14, color='#b0bac5', fontweight='500')
-            ax.set_ylabel("Cumulative EV Count", fontsize=14, color='#b0bac5', fontweight='500')
-            ax.grid(True, alpha=0.1, linestyle='--', linewidth=0.5, color='#2d3746')
+            ax.set_xlabel("Timeline", fontsize=14, 
+                         color='#b0bac5' if theme == "Dark" else '#555555', 
+                         fontweight='500')
+            ax.set_ylabel("Cumulative EV Count", fontsize=14, 
+                         color='#b0bac5' if theme == "Dark" else '#555555', 
+                         fontweight='500')
+            ax.grid(True, alpha=0.1, linestyle='--', linewidth=0.5, 
+                   color='#2d3746' if theme == "Dark" else '#e0e0e0')
             ax.spines['top'].set_visible(False)
             ax.spines['right'].set_visible(False)
-            ax.spines['left'].set_color('#2d3746')
-            ax.spines['bottom'].set_color('#2d3746')
+            ax.spines['left'].set_color('#2d3746' if theme == "Dark" else '#bdbdbd')
+            ax.spines['bottom'].set_color('#2d3746' if theme == "Dark" else '#bdbdbd')
             legend = ax.legend(title="County", frameon=True, framealpha=0.1, fancybox=True, shadow=False,
-                            loc='upper left', fontsize=12, facecolor='#0E1117')
-            legend.get_frame().set_edgecolor('#2d3746')
-            plt.setp(legend.get_title(), color='white')
-            ax.tick_params(colors='#9aa8b9', labelsize=11)
+                            loc='upper left', fontsize=12, 
+                            facecolor='#0E1117' if theme == "Dark" else '#ffffff')
+            legend.get_frame().set_edgecolor('#2d3746' if theme == "Dark" else '#bdbdbd')
+            plt.setp(legend.get_title(), color='#ffffff' if theme == "Dark" else '#000000')
+            ax.tick_params(colors='#9aa8b9' if theme == "Dark" else '#666666', labelsize=11)
             plt.tight_layout()
             st.pyplot(fig)
 
+            # Rest of the comparison logic remains unchanged
             # Comparative Dashboard
             st.markdown('<div class="section-header">Comparative Dashboard</div>', unsafe_allow_html=True)
             metrics = {}
             for cty in multi_counties:
                 cty_df = comp_df[comp_df['County'] == cty].reset_index(drop=True)
-                # Check if there's enough data to avoid IndexError
                 if len(cty_df) > forecast_horizon:
                     historical_total = cty_df['Cumulative EV'].iloc[len(cty_df) - forecast_horizon - 1]
                     forecasted_total = cty_df['Cumulative EV'].iloc[-1]
@@ -559,7 +851,6 @@ if st.button("Generate Multi-County Comparison"):
                 else:
                     st.warning(f"Insufficient data for {cty} to calculate metrics.")
 
-            # Display as a table using st.table, with scrollable container
             if metrics:
                 table_data = []
                 sorted_metrics = dict(sorted(metrics.items(), key=lambda x: x[1]['projected_evs'], reverse=True))
@@ -578,37 +869,41 @@ if st.button("Generate Multi-County Comparison"):
                     })
 
                 df_table = pd.DataFrame(table_data)
-                df_table.index = df_table.index + 1  # Start index from 1
-                df_table.index.name = 'Rank'  # Rename index to Rank
+                df_table.index = df_table.index + 1
+                df_table.index.name = 'Rank'
                 st.markdown('<div class="table-scroll-container">', unsafe_allow_html=True)
                 st.table(df_table.style.set_properties(**{
                     'background-color': 'transparent',
-                    'border': '1px solid rgba(125, 80, 243, 0.2)',
+                    'border': '1px solid rgba(125, 80, 243, 0.2)' if theme == "Dark" else '1px solid rgba(98, 0, 234, 0.2)',
                     'text-align': 'center',
-                    'color': '#b0bac5'
+                    'color': '#b0bac5' if theme == "Dark" else '#555555'
                 }).set_table_styles([
                     {'selector': 'th', 'props': [
-                        ('background-color', '#1a1f2e'),
-                        ('color', '#00C2FF'),
+                        ('background-color', '#1a1f2e' if theme == "Dark" else '#e0e0e0'),
+                        ('color', '#00C2FF' if theme == "Dark" else '#0288d1'),
                         ('font-weight', '600'),
                         ('font-size', '1.1rem'),
                         ('padding', '1rem'),
-                        ('border-bottom', '1px solid rgba(125, 80, 243, 0.2)')
+                        ('border-bottom', '1px solid rgba(125, 80, 243, 0.2)' if theme == "Dark" else '1px solid rgba(98, 0, 234, 0.2)')
                     ]},
                     {'selector': 'td', 'props': [
                         ('padding', '1rem'),
                         ('font-size', '1rem')
                     ]},
                     {'selector': '.rank', 'props': [
-                        ('color', '#7D50F3'),
+                        ('color', '#7D50F3' if theme == "Dark" else '#6200ea'),
                         ('font-weight', '700')
                     ]},
-                    {'selector': '.growth-positive', 'props': [('color', '#51E3A4')]},
-                    {'selector': '.growth-negative', 'props': [('color', '#FF6B6B')]}
+                    {'selector': '.growth-positive', 'props': [
+                        ('color', '#51E3A4' if theme == "Dark" else '#2e7d32')
+                    ]},
+                    {'selector': '.growth-negative', 'props': [
+                        ('color', '#FF6B6B' if theme == "Dark" else '#c62828')
+                    ]}
                 ]).set_table_attributes('class="stTable"'))
                 st.markdown('</div>', unsafe_allow_html=True)
 
-                # Leaderboard Highlights (Enhanced and Simple with more details)
+                # Leaderboard Highlights
                 top_projected = max(metrics.values(), key=lambda x: x['projected_evs'])
                 top_growth = max(metrics.values(), key=lambda x: x['growth_rate'])
                 leaderboard_html = """
@@ -627,7 +922,7 @@ if st.button("Generate Multi-County Comparison"):
                 )
                 st.markdown(leaderboard_html, unsafe_allow_html=True)
 
-                # Comparative Analysis (Enhanced and Simple)
+                # Comparative Analysis
                 min_projected = min(metrics.values(), key=lambda x: x['projected_evs'])
                 max_growth = max(metrics.values(), key=lambda x: x['growth_rate'])
                 min_growth = min(metrics.values(), key=lambda x: x['growth_rate'])
@@ -643,9 +938,9 @@ if st.button("Generate Multi-County Comparison"):
 # Footer
 st.markdown("""
 <div class="footer">
-<strong>EV Adoption Forecaster</strong> | Prepared for AICTE Internship Cycle 2 by S4F<br>
+<strong>EV Adoption Forecaster</strong> | Prepared for AICTE Internship × Edunet<br>
 Made by Akash with 💌
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown('</div>', unsafe_allow_html=True) # Close main container
+st.markdown('</div>', unsafe_allow_html=True)  # Close main container
